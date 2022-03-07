@@ -19,6 +19,8 @@ model Post {
   comments Comment[]
   user     User      @relation(fields: [userId], references: [id])
   userId   String    @db.ObjectId
+  Admin    Admin?    @relation(fields: [adminId], references: [id])
+  adminId  String?   @db.ObjectId
 }
 
 // Comments contain a comment string and connect back to the post.
@@ -31,6 +33,13 @@ model Comment {
 }
 
 model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+model Admin {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   name  String?
